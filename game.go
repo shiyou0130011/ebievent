@@ -1,10 +1,14 @@
 package ebievent
 
-import "github.com/shiyou0130011/go-event"
+import (
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
+	"github.com/shiyou0130011/go-event"
+)
 
 type Game struct {
-	listeners       map[string][]event.Listener
-	isMouseParseing bool
+	listeners        map[string][]event.Listener
+	isMouseParseing  bool
+	numOfKeysPressed int
 }
 
 type noneDispatchEvent string
@@ -20,6 +24,13 @@ func (g *Game) Update() error {
 		g.isMouseParseing = true
 	} else if !anyMouseButtonPressed() {
 		g.isMouseParseing = false
+	}
+	if keys := inpututil.AppendPressedKeys(nil); len(keys) > 0 && len(keys) > g.numOfKeysPressed {
+		g.numOfKeysPressed = len(keys)
+		g.DispatchEvent(newNonDispatchedKeyboardEvent("keydown", keys))
+	} else if len(keys) < g.numOfKeysPressed {
+		g.numOfKeysPressed = len(keys)
+		g.DispatchEvent(newNonDispatchedKeyboardEvent("keyup", keys))
 	}
 	return nil
 }

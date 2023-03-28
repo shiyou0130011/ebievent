@@ -70,18 +70,27 @@ func (g *Game) DispatchEvent(origevent event.NonDispatchedEvent) (result bool) {
 		return
 	}
 	var e event.Event
-	switch origevent.Type() {
-	case "click":
-		_e := &clickEvent{}
-		_e.x, _e.y = ebiten.CursorPosition()
+	if ke, is := origevent.(*nonDispatchedKeyboardEvent); is {
+		_e := &keyboardEvent{}
+		_e.nonDispatchedKeyboardEvent = *ke
 		_e.timestamp = time.Now()
 		e = _e
 
-	default:
-		e = &basicEvent{
-			NonDispatchedEvent: origevent,
-			timestamp:          time.Now(),
+	} else {
+		switch origevent.Type() {
+		case Click:
+			_e := &clickEvent{}
+			_e.x, _e.y = ebiten.CursorPosition()
+			_e.timestamp = time.Now()
+			e = _e
+
+		default:
+			e = &basicEvent{
+				NonDispatchedEvent: origevent,
+				timestamp:          time.Now(),
+			}
 		}
+
 	}
 
 	if cancelable {
