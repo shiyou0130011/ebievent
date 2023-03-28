@@ -30,8 +30,13 @@ func (m *mouseEvent) Target() event.EventTarget {
 }
 
 // The event dispatched when mouse click
-type ClickEvent struct{ mouseEvent }
+type clickEvent struct{ mouseEvent }
 
-func (c *ClickEvent) Type() string {
+func (c clickEvent) Type() string {
 	return "click"
+}
+
+type ClickEvent interface {
+	Position() (int, int)
+	event.Event
 }
