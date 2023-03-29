@@ -25,7 +25,7 @@ func (g *Game) Update() error {
 	} else if !anyMouseButtonPressed() {
 		g.isMouseParseing = false
 	}
-	if keys := inpututil.AppendPressedKeys(nil); len(keys) > 0 && len(keys) > g.numOfKeysPressed {
+	if keys := inpututil.AppendPressedKeys(nil); len(keys) > 0 && len(keys) >= g.numOfKeysPressed {
 		g.numOfKeysPressed = len(keys)
 		g.DispatchEvent(newNonDispatchedKeyboardEvent("keydown", keys))
 	} else if len(keys) < g.numOfKeysPressed {
