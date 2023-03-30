@@ -67,13 +67,15 @@ func newNonDispatchedKeyboardEvent(name string, keys []ebiten.Key) *nonDispatche
 		case ebiten.KeyShift:
 			e.shift |= KeyIsPressed
 		case ebiten.KeyShiftLeft:
-			e.shift |= KeyInLeft
+			e.shift |= KeyInLeft | KeyIsPressed
 		case ebiten.KeyShiftRight:
-			e.shift |= KeyInRight
+			e.shift |= KeyInRight | KeyIsPressed
+		case ebiten.KeyControl:
+			e.ctrl |= KeyIsPressed
 		case ebiten.KeyControlLeft:
-			e.ctrl |= KeyInLeft
+			e.ctrl |= KeyInLeft | KeyIsPressed
 		case ebiten.KeyControlRight:
-			e.ctrl |= KeyInRight
+			e.ctrl |= KeyInRight | KeyIsPressed
 		default:
 			e.keys = append(e.keys, k)
 		}
