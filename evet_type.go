@@ -1,7 +1,8 @@
 package ebievent
 
+// Default event type
 const (
-	Click   = "click"
-	KeyDown = "keydown"
-	KeyUp   = "keyup"
+	EClick   = "click"
+	EKeyDown = "keydown"
+	EKeyUp   = "keyup"
 )

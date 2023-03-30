@@ -78,7 +78,7 @@ func (g *Game) DispatchEvent(origevent event.NonDispatchedEvent) (result bool) {
 
 	} else {
 		switch origevent.Type() {
-		case Click:
+		case EClick:
 			_e := &clickEvent{}
 			_e.x, _e.y = ebiten.CursorPosition()
 			_e.timestamp = time.Now()

@@ -12,6 +12,10 @@ type Game struct {
 }
 
 type noneDispatchEvent string
+type noneDispatchCloseableEvent struct {
+	typename   string
+	cancelable bool
+}
 
 func (e noneDispatchEvent) Type() string {
 	return string(e)
@@ -20,17 +24,19 @@ func (e noneDispatchEvent) Type() string {
 // Update implements the ebiten.Game interface
 func (g *Game) Update() error {
 	if anyMouseButtonPressed() && !g.isMouseParseing {
-		g.DispatchEvent(noneDispatchEvent("click"))
+		g.DispatchEvent(noneDispatchEvent(EClick))
 		g.isMouseParseing = true
 	} else if !anyMouseButtonPressed() {
 		g.isMouseParseing = false
 	}
+
 	if keys := inpututil.AppendPressedKeys(nil); len(keys) > 0 && len(keys) >= g.numOfKeysPressed {
 		g.numOfKeysPressed = len(keys)
-		g.DispatchEvent(newNonDispatchedKeyboardEvent("keydown", keys))
+		g.DispatchEvent(newNonDispatchedKeyboardEvent(EKeyDown, keys))
 	} else if len(keys) < g.numOfKeysPressed {
 		g.numOfKeysPressed = len(keys)
-		g.DispatchEvent(newNonDispatchedKeyboardEvent("keyup", keys))
+		g.DispatchEvent(newNonDispatchedKeyboardEvent(EKeyDown, keys))
 	}
+
 	return nil
 }
