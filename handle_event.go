@@ -70,9 +70,16 @@ func (g *Game) DispatchEvent(origevent event.NonDispatchedEvent) (result bool) {
 		return
 	}
 	var e event.Event
-	if ke, is := origevent.(*nonDispatchedKeyboardEvent); is {
+
+	if ke, isKE := origevent.(*nonDispatchedKeyboardEvent); isKE {
 		_e := &keyboardEvent{}
 		_e.nonDispatchedKeyboardEvent = *ke
+		_e.timestamp = time.Now()
+		e = _e
+
+	} else if we, isWE := origevent.(*nonDispatchedWheelEvent); isWE {
+		_e := &wheelEvent{}
+		_e.nonDispatchedWheelEvent = *we
 		_e.timestamp = time.Now()
 		e = _e
 

@@ -1,6 +1,7 @@
 package ebievent
 
 import (
+	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 	"github.com/shiyou0130011/go-event"
 )
@@ -36,6 +37,10 @@ func (g *Game) Update() error {
 	} else if len(keys) < g.numOfKeysPressed {
 		g.numOfKeysPressed = len(keys)
 		g.DispatchEvent(newNonDispatchedKeyboardEvent(EKeyDown, keys))
+	}
+
+	if x, y := ebiten.Wheel(); x != 0 || y != 0 {
+		g.DispatchEvent(&nonDispatchedWheelEvent{x, y, EWheel})
 	}
 
 	return nil

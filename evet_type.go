@@ -5,4 +5,5 @@ const (
 	EClick   = "click"
 	EKeyDown = "keydown"
 	EKeyUp   = "keyup"
+	EWheel   = "wheel"
 )
