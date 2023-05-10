@@ -3,7 +3,7 @@ module github.com/shiyou0130011/ebievent
 go 1.18
 
 require (
-	github.com/hajimehoshi/ebiten/v2 v2.5.0
+	github.com/hajimehoshi/ebiten/v2 v2.5.4
 	github.com/shiyou0130011/go-event v1.0.0
 )
 
